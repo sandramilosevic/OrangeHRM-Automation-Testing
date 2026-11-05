@@ -1,0 +1,22 @@
+[
+    {
+        "testcase": "Valid login",
+        "valid": true,
+        "username": "Admin",
+        "password": "admin123"
+    },
+    {
+        "testcase": "Invalid password",
+        "valid": false,
+        "username": "Admin",
+        "password": "wrong",
+        "expectedError": "Invalid credentials"
+    },
+    {
+        "testcase": "Empty username",
+        "valid": false,
+        "username": "",
+        "password": "admin123",
+        "expectedError": "Required"
+    }
+]

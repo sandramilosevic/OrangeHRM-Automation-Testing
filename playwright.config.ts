@@ -2,7 +2,6 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
-// Učitava TEST_EMAIL i TEST_PASSWORD iz .env fajla
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 export default defineConfig({
@@ -14,8 +13,7 @@ export default defineConfig({
   reporter: 'html',
 
   use: {
-    // Zameni adresom tvog sajta, bez ovoga '/api/login' i '/login' ne rade
-    baseURL: 'http://localhost:3000',
+    baseURL: 'https://opensource-demo.orangehrmlive.com/web/index.php/',
 
     trace: 'on-first-retry',
   },
@@ -34,10 +32,4 @@ export default defineConfig({
       use: { ...devices['Desktop Safari'] },
     },
   ],
-
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });

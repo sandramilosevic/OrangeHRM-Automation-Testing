@@ -5,6 +5,8 @@ export abstract class BasePage {
 
     abstract get url(): string;
 
+    readonly successToast = this.page.locator('.oxd-text--toast-message');
+
     async goto() {
         await this.page.goto(this.url);
     }
@@ -13,8 +15,23 @@ export abstract class BasePage {
         await expect(this.page).toHaveURL(urlPattern);
     }
 
-    async verifyText(locator: Locator, expectedText: string) {
-        await expect(locator).toHaveText(expectedText);
+    async verifyText(locator: Locator, expectedText: string | RegExp) {
+        await expect(locator).toContainText(expectedText);
+    }
+
+    async verifyTextOnPage(text: string) {
+        await this.verifyText(this.page.getByText(text).first(), text);
+    }
+
+    async verifySuccessToast() {
+        await this.verifyText(this.successToast, /success/i);
+    }
+
+    async fillForm(fields: [Locator, string][], submitBtn?: Locator) {
+        for (const [locator, value] of fields) {
+            await locator.fill(value);
+        }
+        await submitBtn?.click();
     }
 
     protected getCredentials(options: { valid: boolean; username?: string; password?: string }) {

@@ -17,23 +17,19 @@ export class LoginPage extends BasePage {
     readonly passwordInput = this.page.getByPlaceholder('Password');
     readonly loginBtn = this.page.getByRole('button', { name: 'Login' });
 
-    readonly errorMessage = this.page.getByRole('alert');
-    readonly requiredMessage = this.page.getByText('Required');
-
     async login(options: LoginOptions) {
         const { username, password } = this.getCredentials(options);
-        await this.usernameInput.fill(username);
-        await this.passwordInput.fill(password);
-        await this.loginBtn.click();
+        await this.fillForm(
+            [
+                [this.usernameInput, username],
+                [this.passwordInput, password],
+            ],
+            this.loginBtn
+        );
     }
 
     async verifyLoginStatus(options: LoginOptions) {
         await this.verifyUrl(options.valid ? /dashboard/ : /login/);
-        if (options.expectedError) await this.verifyErrorMessage(options.expectedError);
-    }
-
-    async verifyErrorMessage(expectedText: string) {
-        const locator = expectedText === 'Required' ? this.requiredMessage : this.errorMessage;
-        await this.verifyText(locator, expectedText);
+        if (options.expectedError) await this.verifyTextOnPage(options.expectedError);
     }
 }

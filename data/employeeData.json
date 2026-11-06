@@ -3,14 +3,14 @@
         "testcase": "TC05 - Add employee from PIM page",
         "name": "Amelia",
         "lastName": "Brown",
-        "id": "890",
+        "id": "unique",
         "valid": true
     },
     {
         "testcase": "TC06 - New employee can't have same id as an existing employee",
         "name": "Amelia",
         "lastName": "Brown",
-        "id": "890",
+        "id": "0001",
         "valid": false,
         "expectedError": "Employee Id already exists"
     },
@@ -18,7 +18,7 @@
         "testcase": "TC07 - New employee can't have numbers only name",
         "name": "1",
         "lastName": "1",
-        "id": "0418",
+        "id": "unique",
         "valid": false,
         "expectedError": "Should contain only letters"
     }

@@ -20,6 +20,23 @@
         "lastName": "1",
         "id": "unique",
         "valid": false,
-        "expectedError": "Should contain only letters"
+        "expectedError": "Should contain only letters",
+        "knownBug": "B01"
+    },
+    {
+        "testcase": "TC08 - Search for existing employee by name",
+        "search": "Amelia Brown",
+        "valid": true
+    },
+    {
+        "testcase": "TC09 - Search for employee name by number",
+        "search": "1",
+        "valid": false,
+        "knownBug": "B02"
+    },
+    {
+        "testcase":"TC11 - Employee Name search should show suggestions for name by searched letters",
+        "search":"e",
+        "valid":true
     }
 ]

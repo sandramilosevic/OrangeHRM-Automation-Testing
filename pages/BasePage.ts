@@ -6,6 +6,16 @@ export abstract class BasePage {
     abstract get url(): string;
 
     readonly successToast = this.page.locator('.oxd-text--toast-message');
+    
+    protected group(label: string, exact = false): Locator {
+        return this.page
+            .locator('.oxd-input-group')
+            .filter({
+                has: exact
+                    ? this.page.getByText(label, { exact: true })
+                    : this.page.locator('label', { hasText: label }),
+            });
+    }
 
     async goto() {
         await this.page.goto(this.url);
@@ -34,10 +44,14 @@ export abstract class BasePage {
         await submitBtn?.click();
     }
 
+    async selectDropdown(dropdown: Locator, option: string) {
+        await dropdown.click();
+        await this.page.getByRole('option', { name: option, exact: true }).click();
+}
+
     protected getCredentials(options: { valid: boolean; username?: string; password?: string }) {
         return {
             username: options.valid ? process.env.TEST_USERNAME! : (options.username ?? ''),
             password: options.valid ? process.env.TEST_PASSWORD! : (options.password ?? '')
         };
-    }
-}
+    }}
